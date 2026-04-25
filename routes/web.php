@@ -3,19 +3,10 @@
 use App\Data\Poem;
 use Illuminate\Support\Facades\Route;
 
-Route::livewire('/', 'pages::landing')->name('landing');
+Route::view('/', 'landing', ['firstSlug' => Poem::firstSlug()])->name('landing');
 
 Route::get('/p/{slug}', function (string $slug) {
-    $passage = Poem::passage($slug);
-    abort_unless($passage, 404);
+    abort_unless(Poem::passage($slug), 404);
 
-    $name = request()->cookie('epx_name');
-    if (! $name) {
-        return redirect()->route('landing');
-    }
-
-    return view('reader', [
-        'slug' => $slug,
-        'name' => $name,
-    ]);
+    return view('reader', ['slug' => $slug]);
 })->where('slug', '[0-9]{4}-[a-z0-9-]+')->name('reader');

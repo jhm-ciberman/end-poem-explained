@@ -7,7 +7,11 @@ namespace App\Support;
 use Illuminate\Support\HtmlString;
 
 /**
- * Substitutes `{{name}}` and turns `{{corrupted}}` tokens into Alpine spans.
+ * Replaces `{{name}}` with a JS-filled placeholder and `{{corrupted}}` with
+ * Alpine glitch spans.
+ *
+ * The player's name lives in localStorage on the client; the server only
+ * emits a `<span data-player-name></span>` marker that JS fills in.
  */
 final class PoemRenderer
 {
@@ -18,11 +22,9 @@ final class PoemRenderer
      * teleprompter so it freezes when its line is not focused; pass null
      * for one-off renders that should always animate.
      */
-    public static function inline(string $text, string $name, string $where = 'poem', ?string $lineId = null): HtmlString
+    public static function inline(string $text, string $where = 'poem', ?string $lineId = null): HtmlString
     {
-        $named = str_replace('{{name}}', e($name), $text);
-
-        $parts = preg_split('/(\{\{corrupted\}\})/', $named, -1, PREG_SPLIT_DELIM_CAPTURE);
+        $parts = preg_split('/(\{\{corrupted\}\})/', $text, -1, PREG_SPLIT_DELIM_CAPTURE);
         $out = '';
 
         foreach ($parts as $i => $part) {
@@ -32,12 +34,13 @@ final class PoemRenderer
                 // stable while the characters cycle.
                 $length = 5 + ((mb_strlen($text) + $i) % 5);
                 $out .= self::glitchSpan($length, $where, $lineId);
-            } else {
-                $out .= $part === '' ? '' : e($part);
+            } elseif ($part !== '') {
+                $out .= e($part);
             }
         }
 
-        return new HtmlString($out);
+        // Done after escaping so the placeholder's tags survive intact.
+        return new HtmlString(str_replace('{{name}}', self::namePlaceholder(), $out));
     }
 
     /**
@@ -46,9 +49,9 @@ final class PoemRenderer
      * Substitutes `{{name}}` and replaces `{{corrupted}}` tokens; the
      * surrounding `<p>`, `<em>`, and `<code>` markup is preserved verbatim.
      */
-    public static function analysis(string $html, string $name): HtmlString
+    public static function analysis(string $html): HtmlString
     {
-        $substituted = str_replace('{{name}}', e($name), $html);
+        $substituted = str_replace('{{name}}', self::namePlaceholder(), $html);
 
         $counter = 0;
         $rendered = preg_replace_callback(
@@ -62,6 +65,16 @@ final class PoemRenderer
         );
 
         return new HtmlString($rendered ?? $substituted);
+    }
+
+    /**
+     * The placeholder span that JS fills with the player's name on every
+     * page render. Empty by default so unstyled fallback shows nothing
+     * rather than the literal token.
+     */
+    private static function namePlaceholder(): string
+    {
+        return '<span data-player-name></span>';
     }
 
     /**

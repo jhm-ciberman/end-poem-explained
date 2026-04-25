@@ -58,14 +58,9 @@ export default (config) => ({
     },
 
     changeName() {
-        const fresh = prompt('Read as someone else?', '');
-        if (fresh && fresh.trim()) {
-            const t = fresh.trim();
-            try {
-                localStorage.setItem('epx-name', t);
-            } catch (_) {}
-            document.cookie = 'epx_name=' + encodeURIComponent(t) + '; path=/; max-age=31536000; SameSite=Lax';
-            window.location.reload();
-        }
+        try {
+            localStorage.removeItem('epx-name');
+        } catch (_) {}
+        window.Livewire.navigate('/');
     },
 });

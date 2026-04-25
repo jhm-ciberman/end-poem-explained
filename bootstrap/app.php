@@ -11,10 +11,7 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        // The reader's player name needs to round-trip through both PHP and
-        // the Alpine drawer (which writes the cookie directly), so we exempt
-        // it from Laravel's encrypted-cookie middleware.
-        $middleware->encryptCookies(except: ['epx_name']);
+        //
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

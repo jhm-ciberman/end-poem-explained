@@ -4,7 +4,6 @@
     use App\Support\PoemRenderer;
 
     /** @var string $slug */
-    /** @var string $name */
 
     $passage = Poem::passage($slug);
     $lines = Poem::lines();
@@ -37,6 +36,13 @@
 @endphp
 
 <x-layouts.app :title="'End Poem Explained — ' . $passage->slug">
+    {{-- Reader needs a player name; fall back to landing if missing. --}}
+    <script>
+        if (!localStorage.getItem('epx-name')) {
+            window.location.replace('/');
+        }
+    </script>
+
     <div
         x-data="readerChrome({
             prevUrl: @js($prevUrl),
@@ -106,13 +112,13 @@
                     <div class="font-pixel text-[1.2rem] leading-[1.4] text-ink-soft mb-8 pb-6 border-b border-rule text-pretty space-y-3">
                         @foreach ($passage->lines as $line)
                             <p @class(['m-0', $voiceTextClass($line->voice)])>
-                                {!! PoemRenderer::inline($line->text, $name, 'poem') !!}
+                                {!! PoemRenderer::inline($line->text, 'poem') !!}
                             </p>
                         @endforeach
                     </div>
 
                     <div class="font-serif text-[1.05rem] leading-[1.7] text-ink prose-poem">
-                        {!! PoemRenderer::analysis($passage->analysis, $name) !!}
+                        {!! PoemRenderer::analysis($passage->analysis) !!}
                     </div>
 
                     <div class="mt-12 pt-6 border-t border-rule flex justify-between font-sans text-[0.78rem] tracking-[0.12em] uppercase text-ink-faint">
@@ -170,7 +176,7 @@
                                     @click="window.Livewire.navigate('{{ $clickUrl }}')"
                                 @endif
                             >
-                                {!! PoemRenderer::inline($line->text, $name, 'poem', $line->id) !!}
+                                {!! PoemRenderer::inline($line->text, 'poem', $line->id) !!}
                             </p>
                         @endforeach
                     </div>
@@ -226,7 +232,7 @@
             >
                 <div class="max-w-md p-8 text-center">
                     <h2 class="font-serif italic font-medium text-[clamp(2.5rem,6vw,3.5rem)] m-0 mb-6 text-ink tracking-[-0.01em]">
-                        Wake up, {{ $name }}.
+                        Wake up, <span data-player-name></span>.
                     </h2>
                     <p class="text-ink-soft text-[1.05rem] leading-[1.7] m-0 mb-10">
                         That was the End Poem. You read it through.
