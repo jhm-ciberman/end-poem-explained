@@ -130,50 +130,56 @@
                 </div>
             </div>
 
-            {{-- RIGHT — teleprompter (hidden on mobile) --}}
-            <div
-                class="hidden md:block border-l border-rule px-16 sticky top-0 h-screen overflow-hidden"
-                data-focus-line-id="{{ $focusLineId }}"
-                x-data="teleprompter({
-                    focusLineId: @js($focusLineId),
-                    lineIds: @js($lineIds),
-                })"
-                x-ref="col"
-            >
-                <div class="poem-fade is-top"></div>
-                <div class="poem-fade is-bottom"></div>
-
+            {{-- RIGHT — teleprompter (hidden on mobile, persisted across passage --}}
+            {{-- navigations so the focus glides smoothly instead of snapping). --}}
+            @persist('teleprompter-col')
                 <div
-                    x-ref="stack"
-                    class="poem-stack font-pixel text-[1.35rem] leading-[1.55] max-w-lg"
-                    :style="`transform: translateY(${offset}px)`"
+                    class="hidden md:block border-l border-rule px-16 sticky top-0 h-screen overflow-hidden"
+                    x-data="teleprompter({
+                        focusLineId: @js($focusLineId),
+                        lineIds: @js($lineIds),
+                    })"
+                    x-ref="col"
                 >
-                    @foreach ($lines as $line)
-                        @php
-                            $lineSlug = $passageByLineId[$line->id] ?? null;
-                            $isClickable = $lineSlug && $lineSlug !== $slug;
-                            $clickUrl = $lineSlug ? route('reader', ['slug' => $lineSlug]) : null;
-                            $lineVoiceClass = $voiceTextClass($line->voice);
-                        @endphp
-                        <p
-                            wire:key="line-{{ $line->id }}"
-                            data-line-id="{{ $line->id }}"
-                            @class([
-                                'm-0 mb-[1.4rem] text-pretty',
-                                'pl-6' => $line->voice === Voice::Green,
-                                $lineVoiceClass,
-                                'cursor-pointer' => $isClickable,
-                            ])
-                            :style="`opacity: ${opacityFor('{{ $line->id }}')}`"
-                            @if ($clickUrl)
-                                @click="window.Livewire.navigate('{{ $clickUrl }}')"
-                            @endif
-                        >
-                            {!! PoemRenderer::inline($line->text, $name, 'poem', $line->id) !!}
-                        </p>
-                    @endforeach
+                    <div class="poem-fade is-top"></div>
+                    <div class="poem-fade is-bottom"></div>
+
+                    <div
+                        x-ref="stack"
+                        class="poem-stack font-pixel text-[1.35rem] leading-[1.55] max-w-lg"
+                        :style="`transform: translateY(${offset}px)`"
+                    >
+                        @foreach ($lines as $line)
+                            @php
+                                $lineSlug = $passageByLineId[$line->id] ?? null;
+                                $isClickable = $lineSlug && $lineSlug !== $slug;
+                                $clickUrl = $lineSlug ? route('reader', ['slug' => $lineSlug]) : null;
+                                $lineVoiceClass = $voiceTextClass($line->voice);
+                            @endphp
+                            <p
+                                wire:key="line-{{ $line->id }}"
+                                data-line-id="{{ $line->id }}"
+                                @class([
+                                    'm-0 mb-[1.4rem] text-pretty',
+                                    'pl-6' => $line->voice === Voice::Green,
+                                    $lineVoiceClass,
+                                    'cursor-pointer' => $isClickable,
+                                ])
+                                :style="`opacity: ${opacityFor('{{ $line->id }}')}`"
+                                @if ($clickUrl)
+                                    @click="window.Livewire.navigate('{{ $clickUrl }}')"
+                                @endif
+                            >
+                                {!! PoemRenderer::inline($line->text, $name, 'poem', $line->id) !!}
+                            </p>
+                        @endforeach
+                    </div>
                 </div>
-            </div>
+            @endpersist
+
+            {{-- Outside @persist so each navigation renders a fresh value. --}}
+            {{-- The persisted teleprompter reads this on `livewire:navigated`. --}}
+            <div id="passage-focus" data-line-id="{{ $focusLineId }}" hidden></div>
         </div>
 
         {{-- Index modal --}}

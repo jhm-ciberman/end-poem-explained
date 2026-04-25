@@ -109,21 +109,30 @@ document.addEventListener('alpine:init', () => {
             this.onResize = () => this.recalc(true);
             window.addEventListener('resize', this.onResize);
 
-            // Re-target whenever the focused line changes (driven by Livewire
-            // navigation; the data attribute on the column changes per page).
-            const observer = new MutationObserver(() => {
-                const next = this.$root.dataset.focusLineId;
-                if (next && next !== this.focusLineId) {
-                    this.focusLineId = next;
-                    this.recalc();
-                }
-            });
-            observer.observe(this.$root, { attributes: true, attributeFilter: ['data-focus-line-id'] });
+            // Re-target whenever a wire:navigate brings in a new passage.
+            // The teleprompter element itself is persisted, so this Alpine
+            // instance survives across pages; we read the new focus line
+            // out of the freshly-swapped DOM each time navigation finishes.
+            this.onNavigated = () => this.syncFocusFromDom();
+            document.addEventListener('livewire:navigated', this.onNavigated);
+            // Run once on first load too, in case the data div renders
+            // with a different line than the x-data initial value.
+            this.syncFocusFromDom();
         },
 
         destroy() {
             if (this.rafId) cancelAnimationFrame(this.rafId);
             window.removeEventListener('resize', this.onResize);
+            document.removeEventListener('livewire:navigated', this.onNavigated);
+        },
+
+        syncFocusFromDom() {
+            const el = document.getElementById('passage-focus');
+            const next = el?.dataset.lineId;
+            if (next && next !== this.focusLineId) {
+                this.focusLineId = next;
+                this.recalc();
+            }
         },
 
         recalc(snap = false) {
