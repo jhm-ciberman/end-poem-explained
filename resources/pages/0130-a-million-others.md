@@ -1,7 +1,7 @@
 ---
 lines:
   - voice: cyan
-    text: "It worked, with a million others, to sculpt a true world in a fold of the bUýàc&, and created a řŃØĺhž for {ŻżPİ2, in the jŠnPhr."
+    text: "It worked, with a million others, to sculpt a true world in a fold of the {{corrupted}}, and created a {{corrupted}} for {{corrupted}}, in the {{corrupted}}."
 ---
 
 The famously corrupted text. This is the moment the poem performs its own thesis. The voices try to describe what you have actually built in the deeper reality — and the words break, because no human language can carry that information. The interface fails. You see only static where the meaning was supposed to be.
