@@ -12,9 +12,8 @@ use Symfony\Component\Yaml\Yaml;
 /**
  * Loader for the poem passages stored as markdown files in `resources/pages/`.
  *
- * Filenames carry a four-digit numeric prefix (`0010-…`, `0020-…`) that
- * defines reading order. The prefix increments by ten so new passages can
- * be inserted between existing ones without renumbering.
+ * Filenames carry a three-digit zero-padded sequential prefix (`001-…`,
+ * `002-…`, …, `117-…`) that defines reading order via lexicographic sort.
  *
  * Tokens left intact in the loaded text:
  *   - `{{name}}`      — substituted by the rendering layer.
@@ -67,18 +66,18 @@ final class Poem
     public static function landmarks(): array
     {
         $landmarks = [
-            ['slug' => '0010-i-see-the-player-you-mean', 'label' => 'The opening'],
-            ['slug' => '0020-the-name',                  'label' => 'Your name, first time'],
-            ['slug' => '0130-a-million-others',          'label' => 'First breakage'],
-            ['slug' => '0250-sometimes-i-do-not-care',   'label' => 'Almost telling you'],
-            ['slug' => '0380-player-of-games',           'label' => 'Player of games'],
-            ['slug' => '0400-take-a-breath-now',         'label' => 'Take a breath'],
-            ['slug' => '0480-who-are-we',                'label' => 'Who are we'],
-            ['slug' => '0660-once-upon-a-time',          'label' => 'Once upon a time'],
-            ['slug' => '0670-the-player-was-you',        'label' => 'Your name, last time'],
-            ['slug' => '1030-i-love-you',                'label' => 'I love you'],
-            ['slug' => '1160-you-are-the-player-final',  'label' => 'You are the player'],
-            ['slug' => '1170-wake-up',                   'label' => 'Wake up'],
+            ['slug' => '001-i-see-the-player-you-mean', 'label' => 'The opening'],
+            ['slug' => '002-the-name',                  'label' => 'Your name, first time'],
+            ['slug' => '013-a-million-others',          'label' => 'First breakage'],
+            ['slug' => '025-sometimes-i-do-not-care',   'label' => 'Almost telling you'],
+            ['slug' => '038-player-of-games',           'label' => 'Player of games'],
+            ['slug' => '040-take-a-breath-now',         'label' => 'Take a breath'],
+            ['slug' => '048-who-are-we',                'label' => 'Who are we'],
+            ['slug' => '066-once-upon-a-time',          'label' => 'Once upon a time'],
+            ['slug' => '067-the-player-was-you',        'label' => 'Your name, last time'],
+            ['slug' => '103-i-love-you',                'label' => 'I love you'],
+            ['slug' => '116-you-are-the-player-final',  'label' => 'You are the player'],
+            ['slug' => '117-wake-up',                   'label' => 'Wake up'],
         ];
 
         $known = self::index()->bySlug;
@@ -206,7 +205,7 @@ final class Poem
         $bucketVoice = null;
 
         $flush = function () use (&$paragraphs, &$bucket, &$bucketSlug, &$bucketVoice): void {
-            if ($bucket === []) {
+            if ($bucket === [] || $bucketSlug === null || $bucketVoice === null) {
                 return;
             }
             $paragraphs[] = new Paragraph(
