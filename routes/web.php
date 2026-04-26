@@ -3,7 +3,7 @@
 use App\Data\Poem;
 use Illuminate\Support\Facades\Route;
 
-Route::view('/', 'landing', ['firstSlug' => Poem::firstSlug()])->name('landing');
+Route::get('/', fn () => view('landing', ['firstSlug' => Poem::firstSlug()]))->name('landing');
 
 Route::get('/p/{slug}', function (string $slug) {
     abort_unless(Poem::passage($slug), 404);
