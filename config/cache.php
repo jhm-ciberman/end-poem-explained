@@ -1,5 +1,10 @@
 <?php
 
+use App\Data\Paragraph;
+use App\Data\Passage;
+use App\Data\PoemIndex;
+use App\Data\PoemLine;
+use App\Data\Voice;
 use Illuminate\Support\Str;
 
 return [
@@ -125,6 +130,12 @@ return [
     |
     */
 
-    'serializable_classes' => false,
+    'serializable_classes' => [
+        PoemIndex::class,
+        Passage::class,
+        PoemLine::class,
+        Paragraph::class,
+        Voice::class,
+    ],
 
 ];
