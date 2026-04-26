@@ -90,8 +90,8 @@
             <button type="button" @click="changeName()" title="Change name" aria-label="Change name" class="w-10 h-10 rounded-full bg-transparent border-0 cursor-pointer text-ink-soft grid place-items-center hover:bg-rule hover:text-ink transition-colors">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="w-4 h-4"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg>
             </button>
-            <a href="{{ route('reader', ['slug' => Poem::firstSlug()]) }}" wire:navigate title="Restart" aria-label="Restart" class="w-10 h-10 rounded-full bg-transparent border-0 cursor-pointer text-ink-soft grid place-items-center hover:bg-rule hover:text-ink transition-colors no-underline">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M3 12a9 9 0 109-9 9 9 0 00-7 3.3"/><polyline points="3 4 3 8 7 8"/></svg>
+            <a href="https://github.com/jhm-ciberman/end-poem-explained" target="_blank" rel="noopener noreferrer" title="Source on GitHub" aria-label="Source on GitHub" class="w-10 h-10 rounded-full bg-transparent border-0 cursor-pointer text-ink-soft grid place-items-center hover:bg-rule hover:text-ink transition-colors no-underline">
+                <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M12 .297a12 12 0 00-3.79 23.39c.6.11.82-.26.82-.58 0-.29-.01-1.05-.02-2.07-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.21.09 1.84 1.24 1.84 1.24 1.07 1.84 2.81 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.66-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.11-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 016 0c2.29-1.55 3.3-1.23 3.3-1.23.65 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.62-5.49 5.92.43.37.81 1.1.81 2.22 0 1.61-.01 2.9-.01 3.3 0 .32.22.7.83.58A12 12 0 0012 .297z"/></svg>
             </a>
         </div>
 
