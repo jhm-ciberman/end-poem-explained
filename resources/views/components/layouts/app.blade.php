@@ -12,6 +12,21 @@
     <meta name="apple-mobile-web-app-title" content="End Poem" />
     <link rel="manifest" href="/site.webmanifest" />
 
+    <meta name="description" content="A reading of Julian Gough's End Poem, line by line." />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="End Poem Explained" />
+    <meta property="og:title" content="End Poem Explained" />
+    <meta property="og:description" content="A reading of Julian Gough's End Poem, line by line." />
+    <meta property="og:url" content="{{ url()->current() }}" />
+    <meta property="og:image" content="{{ url('/og.webp') }}" />
+    <meta property="og:image:type" content="image/webp" />
+    <meta property="og:image:width" content="1195" />
+    <meta property="og:image:height" content="625" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="End Poem Explained" />
+    <meta name="twitter:description" content="A reading of Julian Gough's End Poem, line by line." />
+    <meta name="twitter:image" content="{{ url('/og.webp') }}" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400;1,8..60,500&family=Inter:wght@400;500;600&family=VT323&display=swap" rel="stylesheet">
