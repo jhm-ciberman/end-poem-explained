@@ -50,5 +50,7 @@
     {{ $slot }}
 
     @livewireScripts
+
+    <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "07f0479d184a46fea6ecedb1adb7037f"}'></script>
 </body>
 </html>
