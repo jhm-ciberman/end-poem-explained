@@ -15,4 +15,3 @@ test('passage renders', function (string $slug) {
 test('unknown slug 404s', function () {
     $this->get('/p/999-does-not-exist')->assertNotFound();
 });
-

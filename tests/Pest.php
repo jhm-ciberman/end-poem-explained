@@ -16,6 +16,12 @@ use Tests\TestCase;
 
 pest()->extend(TestCase::class)
  // ->use(RefreshDatabase::class)
+    ->beforeEach(function () {
+        // Smoke tests render Blade views that include `@vite(...)`. Without
+        // a manifest on disk that directive throws; CI doesn't build assets
+        // before running the test suite, so we stub Vite out by default.
+        $this->withoutVite();
+    })
     ->in('Feature');
 
 /*
