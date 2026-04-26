@@ -98,8 +98,8 @@
         {{-- Two-column reader --}}
         <div class="grid grid-cols-1 md:grid-cols-2 min-h-screen bg-bg">
             {{-- LEFT — analysis --}}
-            <div class="flex md:justify-end px-6 pt-18 pb-12 md:px-20 md:py-24 md:sticky md:top-0 md:h-screen md:overflow-y-auto">
-                <div class="max-w-lg w-full">
+            <div class="flex items-start md:justify-end px-6 pt-18 pb-12 md:px-20 md:py-24 md:sticky md:top-0 md:h-screen md:overflow-y-auto">
+                <div class="max-w-lg w-full pb-12 md:pb-16">
                     <p class="font-sans text-[0.7rem] tracking-[0.16em] uppercase text-ink-faint mb-4 flex items-center gap-2.5">
                         <span @class([
                             'w-1.5 h-1.5 rounded-full',
