@@ -2,6 +2,7 @@
 lines:
   - voice: cyan
     text: "Then gods, demons. Angels."
+    paragraph: who-are-we
 ---
 
 The voice marks a transition. *Then.* The shift from animism to organized polytheism to monotheism. The proliferation of named beings in elaborate hierarchies. Zeus, Odin, Indra, Quetzalcoatl. The bright servants and the dark adversaries. The angels and the fallen angels.

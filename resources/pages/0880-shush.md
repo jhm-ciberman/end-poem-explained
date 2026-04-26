@@ -2,6 +2,7 @@
 lines:
   - voice: cyan
     text: "Shush."
+    paragraph: shush-created
 ---
 
 And there it is. *Shush.*

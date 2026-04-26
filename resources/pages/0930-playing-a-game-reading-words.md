@@ -2,6 +2,7 @@
 lines:
   - voice: green
     text: "Sometimes it believed it was playing a game. Sometimes it believed it was reading words on a screen."
+    paragraph: believed-universe
 ---
 
 And then the two final items in the catalog. *Sometimes it believed it was playing a game.* Yes — you have played many games. You have, while playing them, fully believed yourself to be a player inside a game. *Sometimes it believed it was reading words on a screen.* And you are doing that *right now*.

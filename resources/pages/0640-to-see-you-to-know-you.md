@@ -2,6 +2,7 @@
 lines:
   - voice: green
     text: "To see you, player. To know you. And to be known."
+    paragraph: we-are-the-universe
 ---
 
 And here is the answer.

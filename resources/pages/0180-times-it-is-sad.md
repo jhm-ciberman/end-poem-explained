@@ -2,6 +2,7 @@
 lines:
   - voice: green
     text: "But there are times it is sad, in the long dream."
+    paragraph: times-it-is-sad
 ---
 
 The voice changes register. Quieter. Almost confidential. *We need to talk about your sadness.*

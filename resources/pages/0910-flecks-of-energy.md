@@ -2,6 +2,7 @@
 lines:
   - voice: cyan
     text: "Sometimes it built a model of the universe in its head; flecks of energy, moving through vast empty spaces. Sometimes it called those flecks \"electrons\" and \"protons\"."
+    paragraph: shush-created
   - voice: green
     text: "Sometimes it called them \"planets\" and \"stars\"."
 ---

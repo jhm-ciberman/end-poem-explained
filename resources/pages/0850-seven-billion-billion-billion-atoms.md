@@ -2,6 +2,7 @@
 lines:
   - voice: green
     text: "The seven billion billion billion atoms of the player's body were created, long before this game, in the heart of a star."
+    paragraph: seven-billion-atoms
 ---
 
 And here, the line that has been quoted in a thousand contexts, used in a thousand commencement speeches, but which retains its full force when you let it land in its actual location, with the voice saying it specifically about you.

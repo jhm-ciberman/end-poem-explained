@@ -2,6 +2,7 @@
 lines:
   - voice: green
     text: "Take a breath, now. Take another."
+    paragraph: take-a-breath
 ---
 
 And here the poem reaches across the screen and touches you.

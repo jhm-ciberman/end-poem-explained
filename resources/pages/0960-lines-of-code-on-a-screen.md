@@ -2,6 +2,7 @@
 lines:
   - voice: green
     text: "Sometimes the player read lines of code on a screen."
+    paragraph: shush-read-code
 ---
 
 The voice resumes after the shush. And it picks up the thread — *reading words on a screen* — but it goes deeper. *Lines of code.*

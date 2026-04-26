@@ -2,6 +2,7 @@
 lines:
   - voice: cyan
     text: "Once we were called the spirit of the mountain."
+    paragraph: who-are-we
 ---
 
 The voice begins the catalog. And the order matters. It begins with the *oldest*, the most pre-civilizational, the most local. Before there were nations, before there was writing, before there were temples, there were mountains, and the people who lived near them felt that the mountain had *spirit*. That something in the mountain knew them and they knew it.

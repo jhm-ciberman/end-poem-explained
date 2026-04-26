@@ -2,6 +2,7 @@
 lines:
   - voice: green
     text: "The ball of molten rock circled a ball of blazing gas that was three hundred and thirty thousand times more massive than it."
+    paragraph: it-thought-itself-human
 ---
 
 The scale expands. Now the planet is a *ball* — small, finite — and it *circles* something far larger.

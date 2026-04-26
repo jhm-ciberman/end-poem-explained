@@ -2,6 +2,7 @@
 lines:
   - voice: green
     text: "I shall tell you a story."
+    paragraph: we-are-the-universe
 ---
 
 And now the voice formally begins. The frame has been set. You have been named, breathed back into your body, given the cosmic context, told who is speaking and why. And now — *I shall tell you a story.*

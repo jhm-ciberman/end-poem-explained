@@ -2,6 +2,7 @@
 lines:
   - voice: green
     text: "Sometimes it thought itself human, on the thin crust of a spinning globe of molten rock."
+    paragraph: it-thought-itself-human
 ---
 
 And here the universe begins describing your life from cosmic distance. The defamiliarization is immediate and total.

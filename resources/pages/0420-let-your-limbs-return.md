@@ -2,6 +2,7 @@
 lines:
   - voice: green
     text: "Let your limbs return."
+    paragraph: take-a-breath
 ---
 
 You had become, during the poem, mostly a pair of eyes and a mind. The voice now reassembles you. *Let your limbs return.* Your arms exist. Your legs exist. The fingers holding the phone, the ankles crossed under the blanket, the small ache somewhere in your back from a gym session — all of it, returning to attention.

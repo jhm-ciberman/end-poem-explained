@@ -2,6 +2,7 @@
 lines:
   - voice: green
     text: "Sometimes I want to tell them of their importance to the universe."
+    paragraph: deep-in-dreams
 ---
 
 Same gesture. The voice wants to tell you that you matter — not as a member of humanity, not abstractly, but specifically. *You*, this configuration of atoms with this name, are important to the cosmos that produced you. The universe is invested in you. You are not optional to it.

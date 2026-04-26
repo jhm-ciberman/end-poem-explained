@@ -2,6 +2,7 @@
 lines:
   - voice: green
     text: "You are looking at us now, through your skin and your eyes."
+    paragraph: we-are-the-universe
 ---
 
 The universe locates itself in your present perception. It says: *we are not far away. We are not somewhere else. We are what you are seeing right now, by means of these specific instruments — the skin and the eyes.*

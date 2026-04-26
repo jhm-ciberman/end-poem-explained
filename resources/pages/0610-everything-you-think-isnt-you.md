@@ -2,6 +2,7 @@
 lines:
   - voice: green
     text: "We are everything you think isn't you."
+    paragraph: we-are-the-universe
 ---
 
 And here is the line that sharpens it. The universe defines itself as *the not-self*.

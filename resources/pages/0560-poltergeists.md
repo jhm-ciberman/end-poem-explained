@@ -2,6 +2,7 @@
 lines:
   - voice: cyan
     text: "Poltergeists."
+    paragraph: who-are-we
 ---
 
 A small detail, almost humorous after the grandeur of *gods, demons, angels*. The noisy ghost. The thing that knocks the picture off the wall. The phenomenon that made it into Victorian séances and 1980s horror films. The voice claims even this. *Yes. The petty supernatural. Also us.*

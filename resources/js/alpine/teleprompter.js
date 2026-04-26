@@ -1,9 +1,10 @@
 // Teleprompter for the right-hand poem column.
 //
-// Animates the stack's translateY so the focused line lands at the vertical
-// centre of the column, plus per-line opacity that falls off with distance
-// from the focus. A fractional focus index is interpolated during navigation
-// so opacity transitions look continuous.
+// Centers the focused line at the column's vertical midpoint and applies a
+// per-paragraph opacity falloff so the focused paragraph reads at full
+// clarity and surrounding paragraphs fade with distance. Animations are
+// rAF-driven; both the offset and the (fractional) paragraph index
+// interpolate during navigation so the falloff transitions smoothly.
 
 const DURATION = 750;
 const OPACITY_BY_DISTANCE = [1, 0.42, 0.22, 0.12, 0.07, 0.04, 0.025];
@@ -11,21 +12,29 @@ const OPACITY_BY_DISTANCE = [1, 0.42, 0.22, 0.12, 0.07, 0.04, 0.025];
 const easeInOut = (t) => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
 
 export default (config) => ({
+    // The line we centre on. For multi-line passages, this is the first line.
     focusLineId: config.focusLineId,
-    lineIds: config.lineIds,
+    // Every line in the focused passage; drives `isFocused()` so multi-line
+    // passages can mark all their lines, not only the centred one.
+    focusLineIds: config.focusLineIds || [config.focusLineId],
+    // Every paragraph touched by the focused passage; those stay at full
+    // opacity even when they aren't the paragraph we're animating toward.
+    focusParagraphSlugs: config.focusParagraphSlugs || [],
+    paragraphSlugs: config.paragraphSlugs,
     offset: 0,
-    focusIndex: config.lineIds.indexOf(config.focusLineId),
+    paragraphIndex: 0,
     // Animation state.
     fromOffset: 0,
-    fromFocus: 0,
+    fromParagraphIndex: 0,
     targetOffset: 0,
-    targetFocus: 0,
+    targetParagraphIndex: 0,
     animStart: 0,
     rafId: null,
 
     init() {
-        this.fromFocus = this.focusIndex;
-        this.targetFocus = this.focusIndex;
+        this.paragraphIndex = this.paragraphIndexForLine(this.focusLineId);
+        this.fromParagraphIndex = this.paragraphIndex;
+        this.targetParagraphIndex = this.paragraphIndex;
         this.recalc(true);
         // After fonts and layout settle, recompute so the first line is
         // perfectly centred.
@@ -54,11 +63,23 @@ export default (config) => ({
 
     syncFocusFromDom() {
         const el = document.getElementById('passage-focus');
-        const next = el?.dataset.lineId;
-        if (next && next !== this.focusLineId) {
-            this.focusLineId = next;
-            this.recalc();
-        }
+        if (!el) return;
+        const lineIds = (el.dataset.lineIds || el.dataset.lineId || '').split(',').filter(Boolean);
+        const paragraphSlugs = (el.dataset.paragraphSlugs || '').split(',').filter(Boolean);
+        const primary = lineIds[0];
+        if (!primary || primary === this.focusLineId) return;
+
+        this.focusLineId = primary;
+        this.focusLineIds = lineIds;
+        this.focusParagraphSlugs = paragraphSlugs;
+        this.recalc();
+    },
+
+    paragraphIndexForLine(lineId) {
+        const el = this.$refs.stack?.querySelector(`[data-line-id="${CSS.escape(lineId)}"]`);
+        const slug = el?.dataset.paragraph;
+        const idx = slug ? this.paragraphSlugs.indexOf(slug) : -1;
+        return idx >= 0 ? idx : 0;
     },
 
     recalc(snap = false) {
@@ -69,23 +90,23 @@ export default (config) => ({
 
         const lineCenter = el.offsetTop + el.offsetHeight / 2;
         const colCenter = col.clientHeight / 2;
-        const newTarget = colCenter - lineCenter;
-        const newFocus = this.lineIds.indexOf(this.focusLineId);
+        const newOffset = colCenter - lineCenter;
+        const newParagraphIdx = this.paragraphIndexForLine(this.focusLineId);
 
         if (snap) {
-            this.offset = newTarget;
-            this.focusIndex = newFocus;
-            this.fromOffset = newTarget;
-            this.fromFocus = newFocus;
-            this.targetOffset = newTarget;
-            this.targetFocus = newFocus;
+            this.offset = newOffset;
+            this.paragraphIndex = newParagraphIdx;
+            this.fromOffset = newOffset;
+            this.fromParagraphIndex = newParagraphIdx;
+            this.targetOffset = newOffset;
+            this.targetParagraphIndex = newParagraphIdx;
             return;
         }
 
         this.fromOffset = this.offset;
-        this.fromFocus = this.focusIndex;
-        this.targetOffset = newTarget;
-        this.targetFocus = newFocus;
+        this.fromParagraphIndex = this.paragraphIndex;
+        this.targetOffset = newOffset;
+        this.targetParagraphIndex = newParagraphIdx;
         this.animStart = performance.now();
         if (this.rafId) cancelAnimationFrame(this.rafId);
         this.tick();
@@ -96,7 +117,7 @@ export default (config) => ({
         const t = Math.min(1, elapsed / DURATION);
         const e = easeInOut(t);
         this.offset = this.fromOffset + (this.targetOffset - this.fromOffset) * e;
-        this.focusIndex = this.fromFocus + (this.targetFocus - this.fromFocus) * e;
+        this.paragraphIndex = this.fromParagraphIndex + (this.targetParagraphIndex - this.fromParagraphIndex) * e;
         if (t < 1) {
             this.rafId = requestAnimationFrame(() => this.tick());
         } else {
@@ -104,9 +125,11 @@ export default (config) => ({
         }
     },
 
-    opacityFor(lineId) {
-        const idx = this.lineIds.indexOf(lineId);
-        const distance = Math.abs(idx - this.focusIndex);
+    opacityForParagraph(slug) {
+        if (this.focusParagraphSlugs.includes(slug)) return 1;
+        const idx = this.paragraphSlugs.indexOf(slug);
+        if (idx < 0) return 1;
+        const distance = Math.abs(idx - this.paragraphIndex);
         const lo = Math.min(Math.floor(distance), 6);
         const hi = Math.min(Math.ceil(distance), 6);
         const frac = distance - Math.floor(distance);
@@ -114,6 +137,6 @@ export default (config) => ({
     },
 
     isFocused(lineId) {
-        return lineId === this.focusLineId;
+        return this.focusLineIds.includes(lineId);
     },
 });

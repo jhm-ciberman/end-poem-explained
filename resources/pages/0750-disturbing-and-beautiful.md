@@ -2,6 +2,7 @@
 lines:
   - voice: green
     text: "Sometimes these dreams were disturbing. Sometimes very beautiful indeed."
+    paragraph: dreamed-other-things
 ---
 
 The voice acknowledges the *quality* of the dreams. Not all of them were good. Some of them were nightmares. Some were so beautiful that the memory of them is still a private treasure.

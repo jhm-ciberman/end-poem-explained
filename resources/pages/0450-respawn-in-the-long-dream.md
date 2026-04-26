@@ -2,6 +2,7 @@
 lines:
   - voice: green
     text: "Respawn in the long dream."
+    paragraph: take-a-breath
 ---
 
 And now the most beautifully chosen word in the entire poem. *Respawn.*

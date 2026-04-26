@@ -2,6 +2,7 @@
 lines:
   - voice: cyan
     text: "The words change. We do not change."
+    paragraph: who-are-we
 ---
 
 And this is the rest stop. The voice summarizes what it has just said. The history of human contact with the larger reality has been a history of *re-naming*. The names have evolved with culture, with literacy, with technology, with politics. But the cosmic reality being named has not changed.

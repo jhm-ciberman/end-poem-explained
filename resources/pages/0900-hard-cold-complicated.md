@@ -2,6 +2,7 @@
 lines:
   - voice: cyan
     text: "Sometimes hard, and cold, and complicated."
+    paragraph: shush-created
 ---
 
 And then the opposite. *Sometimes you built worlds that were hard.* The version of yourself that always grinds. The intellectual edifice with no exits. The complicated emotional dynamic you constructed in a relationship and then suffered inside. The depressive episode that built a whole black-sun world. The work-self that demanded everything and gave nothing back.

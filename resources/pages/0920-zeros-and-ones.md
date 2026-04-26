@@ -2,6 +2,7 @@
 lines:
   - voice: green
     text: "Sometimes it believed it was in a universe that was made of energy that was made of offs and ons; zeros and ones; lines of code."
+    paragraph: believed-universe
 ---
 
 And then the contemporary metaphor. The simulation hypothesis. The voice acknowledges that *some* dreams the player has had place the player inside a *computational* universe — energy made of binary information, reality as code being executed on some unseen substrate.

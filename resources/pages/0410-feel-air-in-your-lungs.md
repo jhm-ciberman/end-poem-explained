@@ -2,6 +2,7 @@
 lines:
   - voice: green
     text: "Feel air in your lungs."
+    paragraph: take-a-breath
 ---
 
 A second instruction. *Feel.* Not think about, not imagine — *feel*. The poem is pulling you out of the cognitive register where you have been receiving it and into the sensory register where you actually live. You have been a reader; you are being asked to become, again, a body.

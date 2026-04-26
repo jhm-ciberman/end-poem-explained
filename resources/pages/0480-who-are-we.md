@@ -2,6 +2,7 @@
 lines:
   - voice: cyan
     text: "Who are we?"
+    paragraph: who-are-we
 ---
 
 The voice asks itself the question, on your behalf. You have been listening to two voices for the entire poem. You have been spoken about by them, addressed by them, breathed back into your body by them. And until this moment you have not been told who *they* are.

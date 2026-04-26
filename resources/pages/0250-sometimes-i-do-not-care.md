@@ -2,6 +2,7 @@
 lines:
   - voice: green
     text: "Sometimes I do not care. Sometimes I wish to tell them, this world you take for truth is merely {{corrupted}} and {{corrupted}}, I wish to tell them that they are {{corrupted}} in the {{corrupted}}."
+    paragraph: sometimes-i-do-not-care
 ---
 
 And then this. The voice's defiance. *Sometimes I don't care if it hears. Sometimes I want it to hear. Sometimes I would rather break the rule than keep it.*

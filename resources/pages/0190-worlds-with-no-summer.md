@@ -2,6 +2,7 @@
 lines:
   - voice: green
     text: "It creates worlds that have no summer, and it shivers under a black sun, and it takes its sad creation for reality."
+    paragraph: times-it-is-sad
 ---
 
 This is one of the most precise descriptions of depression I have ever read.

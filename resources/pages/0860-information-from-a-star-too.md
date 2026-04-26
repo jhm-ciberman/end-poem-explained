@@ -2,6 +2,7 @@
 lines:
   - voice: green
     text: "So the player, too, is information from a star."
+    paragraph: seven-billion-atoms
 ---
 
 And the voice closes the loop.

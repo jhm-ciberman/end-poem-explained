@@ -2,6 +2,7 @@
 lines:
   - voice: green
     text: "Shush…"
+    paragraph: shush-read-code
 ---
 
 And again, the other voice cuts in.

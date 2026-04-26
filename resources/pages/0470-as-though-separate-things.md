@@ -2,6 +2,7 @@
 lines:
   - voice: green
     text: "Your body touching the universe again at every point, as though you were separate things. As though we were separate things."
+    paragraph: take-a-breath
 ---
 
 And then this, which is the philosophical hinge that the breath was preparing you for.

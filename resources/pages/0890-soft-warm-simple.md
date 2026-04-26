@@ -2,6 +2,7 @@
 lines:
   - voice: cyan
     text: "Sometimes the player created a small, private world that was soft and warm and simple."
+    paragraph: shush-created
 ---
 
 And the voice immediately changes the subject. After the cosmic vertigo, the voice returns to the small and the personal. *Sometimes the player created a small, private world.*

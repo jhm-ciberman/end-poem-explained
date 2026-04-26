@@ -6,7 +6,7 @@
     /** @var string $slug */
 
     $passage = Poem::passage($slug);
-    $lines = Poem::lines();
+    $paragraphs = Poem::paragraphs();
     $landmarks = Poem::landmarks();
 
     $neighbours = Poem::neighbours($slug);
@@ -15,9 +15,10 @@
 
     $firstLine = $passage->lines[0] ?? null;
     $primaryVoice = $firstLine?->voice;
-
-    $focusLineId = $firstLine?->id ?? ($lines[0]->id ?? '');
-    $lineIds = collect($lines)->pluck('id')->all();
+    $focusLineId = $firstLine?->id ?? '';
+    $focusLineIds = collect($passage->lines)->pluck('id')->all();
+    $focusParagraphSlugs = collect($passage->lines)->pluck('paragraph')->unique()->values()->all();
+    $paragraphSlugs = collect($paragraphs)->pluck('slug')->all();
 
     // Precompute the passage that owns each line so the teleprompter loop
     // below can resolve clickable jump targets in O(1).
@@ -143,7 +144,9 @@
                     class="hidden md:block border-l border-rule px-16 sticky top-0 h-screen overflow-hidden"
                     x-data="teleprompter({
                         focusLineId: @js($focusLineId),
-                        lineIds: @js($lineIds),
+                        focusLineIds: @js($focusLineIds),
+                        focusParagraphSlugs: @js($focusParagraphSlugs),
+                        paragraphSlugs: @js($paragraphSlugs),
                     })"
                     x-ref="col"
                 >
@@ -155,28 +158,32 @@
                         class="poem-stack font-pixel text-[1.35rem] leading-[1.55] max-w-lg"
                         :style="`transform: translateY(${offset}px)`"
                     >
-                        @foreach ($lines as $line)
-                            @php
-                                $lineSlug = $passageByLineId[$line->id] ?? null;
-                                $isClickable = $lineSlug && $lineSlug !== $slug;
-                                $clickUrl = $lineSlug ? route('reader', ['slug' => $lineSlug]) : null;
-                                $lineVoiceClass = $voiceTextClass($line->voice);
-                            @endphp
+                        @foreach ($paragraphs as $paragraph)
                             <p
-                                wire:key="line-{{ $line->id }}"
-                                data-line-id="{{ $line->id }}"
+                                wire:key="paragraph-{{ $paragraph->slug }}"
                                 @class([
                                     'm-0 mb-[1.4rem] text-pretty',
-                                    'pl-6' => $line->voice === Voice::Green,
-                                    $lineVoiceClass,
-                                    'cursor-pointer' => $isClickable,
+                                    'pl-6' => $paragraph->voice === Voice::Green,
+                                    $voiceTextClass($paragraph->voice),
                                 ])
-                                :style="`opacity: ${opacityFor('{{ $line->id }}')}`"
-                                @if ($clickUrl)
-                                    @click="window.Livewire.navigate('{{ $clickUrl }}')"
-                                @endif
+                                :style="`opacity: ${opacityForParagraph('{{ $paragraph->slug }}')}`"
                             >
-                                {!! PoemRenderer::inline($line->text, 'poem', $line->id) !!}
+                                @foreach ($paragraph->lines as $line)
+                                    @php
+                                        $linePassageSlug = $passageByLineId[$line->id] ?? null;
+                                        $isClickable = $linePassageSlug && $linePassageSlug !== $slug;
+                                        $clickUrl = $linePassageSlug ? route('reader', ['slug' => $linePassageSlug]) : null;
+                                    @endphp
+                                    <span
+                                        data-line-id="{{ $line->id }}"
+                                        data-paragraph="{{ $paragraph->slug }}"
+                                        @class(['cursor-pointer' => $isClickable])
+                                        :class="isFocused('{{ $line->id }}') && 'bg-current/10 box-decoration-clone rounded-sm px-1 -mx-1'"
+                                        @if ($clickUrl)
+                                            @click="window.Livewire.navigate('{{ $clickUrl }}')"
+                                        @endif
+                                    >{!! PoemRenderer::inline($line->text, 'poem', $line->id) !!}</span>{{ ' ' }}
+                                @endforeach
                             </p>
                         @endforeach
                     </div>
@@ -185,7 +192,13 @@
 
             {{-- Outside @persist so each navigation renders a fresh value. --}}
             {{-- The persisted teleprompter reads this on `livewire:navigated`. --}}
-            <div id="passage-focus" data-line-id="{{ $focusLineId }}" hidden></div>
+            <div
+                id="passage-focus"
+                data-line-id="{{ $focusLineId }}"
+                data-line-ids="{{ implode(',', $focusLineIds) }}"
+                data-paragraph-slugs="{{ implode(',', $focusParagraphSlugs) }}"
+                hidden
+            ></div>
         </div>
 
         {{-- Index modal --}}

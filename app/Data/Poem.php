@@ -46,6 +46,16 @@ final class Poem
     }
 
     /**
+     * Lines grouped into source-poem paragraphs, in reading order.
+     *
+     * @return list<Paragraph>
+     */
+    public static function paragraphs(): array
+    {
+        return self::index()->paragraphs;
+    }
+
+    /**
      * Named jumps shown in the reader's index modal.
      *
      * Labelled by name rather than position to spare the reader the "47 of
@@ -174,10 +184,55 @@ final class Poem
         return new PoemIndex(
             passages: $passages,
             lines: $allLines,
+            paragraphs: self::groupIntoParagraphs($allLines),
             bySlug: $bySlug,
             indexBySlug: $indexBySlug,
             lineVoices: $lineVoices,
         );
+    }
+
+    /**
+     * Walk the flat line list and collapse consecutive lines that share a
+     * paragraph slug into a single Paragraph.
+     *
+     * @param  list<PoemLine>  $lines
+     * @return list<Paragraph>
+     */
+    private static function groupIntoParagraphs(array $lines): array
+    {
+        $paragraphs = [];
+        $bucket = [];
+        $bucketSlug = null;
+        $bucketVoice = null;
+
+        $flush = function () use (&$paragraphs, &$bucket, &$bucketSlug, &$bucketVoice): void {
+            if ($bucket === []) {
+                return;
+            }
+            $paragraphs[] = new Paragraph(
+                slug: $bucketSlug,
+                voice: $bucketVoice,
+                lines: $bucket,
+            );
+            $bucket = [];
+            $bucketSlug = null;
+            $bucketVoice = null;
+        };
+
+        foreach ($lines as $line) {
+            if ($bucketSlug !== null && $bucketSlug === $line->paragraph) {
+                $bucket[] = $line;
+
+                continue;
+            }
+            $flush();
+            $bucket = [$line];
+            $bucketSlug = $line->paragraph;
+            $bucketVoice = $line->voice;
+        }
+        $flush();
+
+        return $paragraphs;
     }
 
     /**
@@ -207,10 +262,12 @@ final class Poem
             if ($voice === null) {
                 throw new RuntimeException("Passage {$slug} line {$i} has invalid voice");
             }
+            $id = "{$prefix}-{$i}";
             $lines[] = new PoemLine(
-                id: "{$prefix}-{$i}",
+                id: $id,
                 voice: $voice,
                 text: (string) ($raw['text'] ?? ''),
+                paragraph: (string) ($raw['paragraph'] ?? $id),
             );
         }
 

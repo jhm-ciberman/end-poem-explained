@@ -2,6 +2,7 @@
 lines:
   - voice: green
     text: "Decoded them into words; decoded words into meaning; decoded meaning into feelings, emotions, theories, ideas..."
+    paragraph: shush-read-code
 ---
 
 This is one long unfolding of a single act. *Decoded them into words.* The lines of code — the raw symbols on the screen — get parsed into recognizable words. The eye sees marks; the brain assembles them into language. That is the first decoding.

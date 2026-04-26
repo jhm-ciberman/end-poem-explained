@@ -2,6 +2,7 @@
 lines:
   - voice: green
     text: "There you are."
+    paragraph: take-a-breath
 ---
 
 And this. *There you are.*

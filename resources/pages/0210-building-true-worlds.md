@@ -2,6 +2,7 @@
 lines:
   - voice: green
     text: "Sometimes when they are deep in dreams, I want to tell them, they are building true worlds in reality."
+    paragraph: deep-in-dreams
 ---
 
 Now the voice shifts again — into longing. Into what it *wants* to do but holds back from doing.

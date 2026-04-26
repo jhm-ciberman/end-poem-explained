@@ -2,6 +2,7 @@
 lines:
   - voice: green
     text: "They were so far apart that light took eight minutes to cross the gap."
+    paragraph: it-thought-itself-human
 ---
 
 The scale extends in a different dimension. Not just *how much mass* but *how much distance*. And the voice measures the distance in the most appropriate possible unit: *the time it takes for light to cross it.*

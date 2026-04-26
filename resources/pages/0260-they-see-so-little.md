@@ -2,6 +2,7 @@
 lines:
   - voice: green
     text: "They see so little of reality, in their long dream."
+    paragraph: sometimes-i-do-not-care
 ---
 
 A sigh, almost. The voice composes itself again. Pulls back. Returns to the discipline.

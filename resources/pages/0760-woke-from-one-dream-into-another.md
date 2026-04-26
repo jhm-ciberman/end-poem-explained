@@ -2,6 +2,7 @@
 lines:
   - voice: green
     text: "Sometimes the player woke from one dream into another, then woke from that into a third."
+    paragraph: dreamed-other-things
 ---
 
 And here the voice slips into the metaphysical core. The dreams are *nested*.

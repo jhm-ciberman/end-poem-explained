@@ -2,6 +2,7 @@
 lines:
   - voice: green
     text: "Sometimes, when they have not made a true connection in a while, I want to help them to speak the word they fear."
+    paragraph: deep-in-dreams
 ---
 
 This one will land differently for every reader. *The word they fear* is left blank on purpose. For some it is *love*. For some it is *help*. For some it is *no*. For some it is *yes*. For some it is *I'm not okay*. For some it is a name they have not let themselves say out loud.

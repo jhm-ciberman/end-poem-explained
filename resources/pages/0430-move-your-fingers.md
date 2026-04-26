@@ -2,6 +2,7 @@
 lines:
   - voice: green
     text: "Yes, move your fingers."
+    paragraph: take-a-breath
 ---
 
 A specific small action. *Move your fingers.* The simplest possible gesture of being alive — the most basic motor command. The universe is checking the connection. *Are you here? Can you do this? Are the wires hooked up?* You move your fingers and confirm: yes, I am here, I am back, I am embodied.

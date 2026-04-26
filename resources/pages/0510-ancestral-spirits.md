@@ -2,6 +2,7 @@
 lines:
   - voice: cyan
     text: "Ancestral spirits, animal spirits."
+    paragraph: who-are-we
 ---
 
 The next layer. The dead are still here. Your grandmother's grandmother is still present in the line, still watching, still part of the household. And the animals carry spirits too — the bear, the eagle, the wolf, the salmon, the buffalo, the jaguar — each one a teacher, a kinsman, a power.

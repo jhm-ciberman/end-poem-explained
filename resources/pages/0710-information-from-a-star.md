@@ -2,6 +2,7 @@
 lines:
   - voice: green
     text: "The light was information from a star, and it could burn your skin from a hundred and fifty million kilometres away."
+    paragraph: it-thought-itself-human
 ---
 
 And here the voice closes the long-distance shot with a small sting. *It could burn your skin.*

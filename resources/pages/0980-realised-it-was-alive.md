@@ -2,6 +2,7 @@
 lines:
   - voice: green
     text: "...and the player started to breathe faster and deeper and realised it was alive, it was alive, those thousand deaths had not been real, the player was alive"
+    paragraph: shush-read-code
 ---
 
 And here the voice loses its punctuation.

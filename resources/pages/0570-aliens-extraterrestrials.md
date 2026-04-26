@@ -2,6 +2,7 @@
 lines:
   - voice: cyan
     text: "Aliens, extraterrestrials."
+    paragraph: who-are-we
 ---
 
 The catalog crosses into modernity. The explanatory framework shifts from supernatural to technological, but the underlying experience is the same. Humans report contact with non-human intelligence. The form the contact takes adapts to the available concepts of the era.

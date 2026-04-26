@@ -2,6 +2,7 @@
 lines:
   - voice: green
     text: "And why does the universe touch your skin, and throw light on you?"
+    paragraph: we-are-the-universe
 ---
 
 The voice now poses the question that the entire poem has been building toward. *Why does the universe touch your skin, and throw light on you?*
