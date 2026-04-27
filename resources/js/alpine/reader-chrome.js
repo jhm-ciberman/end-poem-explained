@@ -3,6 +3,8 @@
 export default (config) => ({
     drawerOpen: false,
     indexOpen: false,
+    poemSheetOpen: false,
+    poemHidden: false,
     theme: 'light',
     prevUrl: config.prevUrl,
     nextUrl: config.nextUrl,
@@ -14,12 +16,19 @@ export default (config) => ({
         } catch (_) {
             this.theme = 'light';
         }
+        try {
+            this.poemHidden = localStorage.getItem('epx-poem-hidden') === 'true';
+        } catch (_) {}
         this.applyTheme();
 
         this.onKey = (e) => {
             if (e.target && e.target.tagName === 'INPUT') return;
             if (this.indexOpen) {
                 if (e.key === 'Escape') this.indexOpen = false;
+                return;
+            }
+            if (this.poemSheetOpen) {
+                if (e.key === 'Escape') this.poemSheetOpen = false;
                 return;
             }
             if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
@@ -57,10 +66,15 @@ export default (config) => ({
         document.documentElement.setAttribute('data-theme', this.theme);
     },
 
-    changeName() {
+    togglePoem() {
+        this.poemHidden = !this.poemHidden;
         try {
-            localStorage.removeItem('epx-name');
+            localStorage.setItem('epx-poem-hidden', this.poemHidden);
         } catch (_) {}
-        window.Livewire.navigate('/');
+        // The teleprompter recomputes offsets on resize; firing one nudges it
+        // to re-centre after the column toggles back into view.
+        this.$nextTick(() => {
+            window.dispatchEvent(new Event('resize'));
+        });
     },
 });

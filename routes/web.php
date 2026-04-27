@@ -10,3 +10,8 @@ Route::get('/p/{slug}', function (string $slug) {
 
     return view('reader', ['slug' => $slug]);
 })->where('slug', '[0-9]{3}-[a-z0-9-]+')->name('reader');
+
+Route::get('/poem', fn () => view('full-poem', [
+    'paragraphs' => Poem::paragraphs(),
+    'firstSlug' => Poem::firstSlug(),
+]))->name('full-poem');

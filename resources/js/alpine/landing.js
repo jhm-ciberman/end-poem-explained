@@ -1,6 +1,6 @@
 // Landing form. The name lives in localStorage; this Alpine component
-// owns reading the saved name on entry, validating non-empty input, and
-// kicking off the wire:navigate to the first passage on submit.
+// reads any saved name on entry, validates the input, and routes the
+// visitor to whichever of the two modes (poem or explanation) they pick.
 
 const STORAGE_KEY = 'epx-name';
 
@@ -20,27 +20,22 @@ function writeSaved(name) {
 
 export default () => ({
     name: '',
-    savedName: '',
     firstUrl: '',
+    poemUrl: '',
 
     init() {
         this.firstUrl = this.$root.dataset.firstUrl || '/';
-        this.savedName = readSaved();
-        if (this.savedName) {
-            this.name = this.savedName;
+        this.poemUrl = this.$root.dataset.poemUrl || '/poem';
+        const saved = readSaved();
+        if (saved) {
+            this.name = saved;
         }
     },
 
-    submit() {
+    goTo(url) {
         const trimmed = this.name.trim();
         if (!trimmed) return;
         writeSaved(trimmed);
-        window.Livewire.navigate(this.firstUrl);
-    },
-
-    resume() {
-        if (this.savedName) {
-            window.Livewire.navigate(this.firstUrl);
-        }
+        window.Livewire.navigate(url);
     },
 });
