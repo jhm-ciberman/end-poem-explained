@@ -1,5 +1,6 @@
 <?php
 
+use App\Data\Landmark;
 use App\Data\Paragraph;
 use App\Data\Passage;
 use App\Data\PoemIndex;
@@ -136,6 +137,7 @@ return [
         PoemLine::class,
         Paragraph::class,
         Voice::class,
+        Landmark::class,
     ],
 
 ];
