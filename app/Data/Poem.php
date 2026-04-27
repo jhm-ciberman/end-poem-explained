@@ -57,33 +57,38 @@ final class Poem
     /**
      * Named jumps shown in the reader's index modal.
      *
-     * Labelled by name rather than position to spare the reader the "47 of
-     * 117" anxiety a numeric progress display would create. Landmarks whose
+     * Each anchor is placed at a real transition in the poem (an opening
+     * line, a "Let's go back", a "Take a breath now") so the spans between
+     * them stay roughly even and feel like chapters of the same poem rather
+     * than a mix of one-line bookmarks and 36-passage stretches. Labelled
+     * by name rather than position to spare the reader the "47 of 117"
+     * anxiety a numeric progress display would create. Landmarks whose
      * target slug is missing on disk are silently dropped.
      *
-     * @return list<array{slug: string, label: string}>
+     * @return list<Landmark>
      */
     public static function landmarks(): array
     {
         $landmarks = [
-            ['slug' => '001-i-see-the-player-you-mean', 'label' => 'The opening'],
-            ['slug' => '002-the-name',                  'label' => 'Your name, first time'],
-            ['slug' => '013-a-million-others',          'label' => 'First breakage'],
-            ['slug' => '025-sometimes-i-do-not-care',   'label' => 'Almost telling you'],
-            ['slug' => '038-player-of-games',           'label' => 'Player of games'],
-            ['slug' => '040-take-a-breath-now',         'label' => 'Take a breath'],
-            ['slug' => '048-who-are-we',                'label' => 'Who are we'],
-            ['slug' => '066-once-upon-a-time',          'label' => 'Once upon a time'],
-            ['slug' => '067-the-player-was-you',        'label' => 'Your name, last time'],
-            ['slug' => '103-i-love-you',                'label' => 'I love you'],
-            ['slug' => '116-you-are-the-player-final',  'label' => 'You are the player'],
-            ['slug' => '117-wake-up',                   'label' => 'Wake up'],
+            new Landmark('001-i-see-the-player-you-mean', 'The opening'),
+            new Landmark('008-they-used-to-hear-voices', 'Dreams of being human'),
+            new Landmark('018-times-it-is-sad', 'Sad in the long dream'),
+            new Landmark('027-and-yet-they-play-the-game', 'A cage of words'),
+            new Landmark('040-take-a-breath-now', 'Take a breath'),
+            new Landmark('048-who-are-we', 'Who are we'),
+            new Landmark('060-we-are-the-universe', 'We are the universe'),
+            new Landmark('066-once-upon-a-time', 'Once upon a time'),
+            new Landmark('078-lets-go-back', "Let's go back"),
+            new Landmark('084-lets-go-further-back', "Let's go further back"),
+            new Landmark('094-you-are-the-player-reading-words', 'Reading words on a screen'),
+            new Landmark('100-shuffling-leaves-of-summer', 'The universe spoke'),
+            new Landmark('115-game-was-over-new-dream', 'Wake up'),
         ];
 
         $known = self::index()->bySlug;
 
         return collect($landmarks)
-            ->filter(fn (array $lm): bool => isset($known[$lm['slug']]))
+            ->filter(fn (Landmark $lm): bool => isset($known[$lm->slug]))
             ->values()
             ->all();
     }

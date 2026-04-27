@@ -1,4 +1,5 @@
 @php
+    use App\Data\Landmark;
     use App\Data\Poem;
     use App\Data\Voice;
     use App\Support\PoemRenderer;
@@ -18,12 +19,12 @@
     $passageTotal = max(count($passages) - 1, 1);
     $progressPercent = $passageIndex === false ? 0 : round(($passageIndex / $passageTotal) * 100, 2);
     $landmarkPositions = collect($landmarks)
-        ->map(function (array $lm) use ($passages, $passageTotal): array {
-            $idx = collect($passages)->search(fn ($p) => $p->slug === $lm['slug']);
+        ->map(function (Landmark $lm) use ($passages, $passageTotal): array {
+            $idx = collect($passages)->search(fn ($p) => $p->slug === $lm->slug);
 
             return [
-                'slug' => $lm['slug'],
-                'label' => $lm['label'],
+                'slug' => $lm->slug,
+                'label' => $lm->label,
                 'percent' => $idx === false ? 0 : round(($idx / $passageTotal) * 100, 2),
             ];
         })
@@ -459,15 +460,21 @@
                     Jump to a passage
                 </p>
                 <ul class="list-none p-0 m-0 mb-5">
+                    @php $currentLandmarkSlug = $currentLandmark['slug'] ?? null; @endphp
                     @foreach ($landmarks as $lm)
+                        @php $isCurrent = $lm->slug === $currentLandmarkSlug; @endphp
                         <li class="m-0">
                             <a
-                                href="{{ route('reader', ['slug' => $lm['slug']]) }}"
+                                href="{{ route('reader', ['slug' => $lm->slug]) }}"
                                 wire:navigate
                                 @click="indexOpen = false"
-                                class="w-full bg-transparent border-0 font-serif text-base text-ink cursor-pointer py-3 flex justify-between items-baseline border-b border-rule text-left transition-[padding] hover:pl-1.5 no-underline"
+                                @if ($isCurrent) aria-current="location" @endif
+                                class="w-full bg-transparent border-0 font-serif text-base text-ink cursor-pointer py-3 flex justify-between items-center border-b border-rule text-left transition-[padding] hover:pl-1.5 no-underline"
                             >
-                                <span>{{ $lm['label'] }}{{ $lm['slug'] === $slug ? ' — current' : '' }}</span>
+                                <span>{{ $lm->label }}</span>
+                                @if ($isCurrent)
+                                    <span class="w-1.5 h-1.5 rounded-full bg-ink-soft shrink-0" aria-hidden="true"></span>
+                                @endif
                             </a>
                         </li>
                     @endforeach
