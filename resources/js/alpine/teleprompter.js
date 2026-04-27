@@ -7,7 +7,9 @@
 // interpolate during navigation so the falloff transitions smoothly.
 
 const DURATION = 750;
-const OPACITY_BY_DISTANCE = [1, 0.42, 0.22, 0.12, 0.07, 0.04, 0.025];
+// Softer falloff: distant paragraphs stay legible enough to read as "the
+// poem continues above and below me," not just "there's some fog."
+const OPACITY_BY_DISTANCE = [1, 0.7, 0.5, 0.36, 0.26, 0.19, 0.13];
 
 const easeInOut = (t) => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
 

@@ -6,6 +6,7 @@
     <div
         x-data="landing()"
         data-first-url="{{ route('reader', ['slug' => $firstSlug]) }}"
+        data-poem-url="{{ route('full-poem') }}"
         class="min-h-screen grid place-items-center px-6 py-12 bg-bg"
     >
         <div class="max-w-xl w-full text-center">
@@ -25,38 +26,36 @@
                 <p>The poem will speak your name. Tell it what to call you.</p>
             </div>
 
-            <form @submit.prevent="submit" class="flex flex-col items-center gap-3 mt-8">
-                <div class="relative w-full max-w-sm">
+            <form @submit.prevent="goTo(firstUrl)" class="flex flex-col items-center gap-5 mt-8">
+                <div class="w-full max-w-sm">
                     <input
                         x-model="name"
                         type="text"
                         maxlength="40"
                         autocomplete="off"
-                        placeholder="Name"
+                        placeholder="Your name"
                         autofocus
-                        class="font-serif text-[1.05rem] bg-bg-soft border border-transparent rounded-full text-ink py-[0.85rem] pl-6 pr-12 outline-none w-full text-center transition-colors focus:bg-bg focus:border-ink-very-faint placeholder:text-ink-faint"
+                        class="font-serif text-[1.05rem] bg-bg-soft border border-transparent rounded-full text-ink py-[0.85rem] px-6 outline-none w-full text-center transition-colors focus:bg-bg focus:border-ink-very-faint placeholder:text-ink-faint"
                     />
-                    <button
-                        type="submit"
-                        aria-label="Begin"
-                        :disabled="!name.trim()"
-                        class="absolute right-[0.4rem] top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-bg border-0 cursor-pointer text-ink-soft grid place-items-center transition-colors hover:bg-ink hover:text-bg disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-bg disabled:hover:text-ink-soft"
-                    >
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="w-3.5 h-3.5">
-                            <line x1="5" y1="12" x2="19" y2="12" />
-                            <polyline points="13 6 19 12 13 18" />
-                        </svg>
-                    </button>
                 </div>
 
-                <button
-                    type="button"
-                    x-show="savedName"
-                    x-cloak
-                    @click="resume"
-                    x-text="`continue as ${savedName}`"
-                    class="font-sans text-[0.82rem] text-ink-faint bg-transparent border-0 cursor-pointer mt-4 underline decoration-ink-very-faint underline-offset-4 hover:text-ink"
-                ></button>
+                <div class="flex flex-col sm:flex-row gap-3 w-full max-w-sm">
+                    <button
+                        type="button"
+                        @click="goTo(poemUrl)"
+                        :disabled="!name.trim()"
+                        class="flex-1 font-sans text-[0.78rem] tracking-[0.16em] uppercase bg-transparent border border-ink-very-faint text-ink-soft py-3.5 px-5 rounded-full cursor-pointer transition-all hover:border-ink hover:text-ink disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:border-ink-very-faint disabled:hover:text-ink-soft"
+                    >
+                        Read the poem
+                    </button>
+                    <button
+                        type="submit"
+                        :disabled="!name.trim()"
+                        class="flex-1 font-sans text-[0.78rem] tracking-[0.16em] uppercase bg-transparent border border-ink-very-faint text-ink-soft py-3.5 px-5 rounded-full cursor-pointer transition-all hover:border-ink hover:text-ink disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:border-ink-very-faint disabled:hover:text-ink-soft"
+                    >
+                        Read the explanation
+                    </button>
+                </div>
             </form>
         </div>
     </div>
