@@ -7,7 +7,7 @@
         "dev": "vite"
     },
     "devDependencies": {
-        "@tailwindcss/vite": "^4.0.0",
+        "@tailwindcss/vite": "^4.3.3",
         "concurrently": "^10.0.5",
         "laravel-vite-plugin": "^3.0.0",
         "tailwindcss": "^4.3.0",
